@@ -3,7 +3,7 @@ import { Article } from '../models';
 // find article in mongoDB
 const find = async (id) => {
   const articleFound = await Article.find({ objectID: id });
-  return !articleFound;
+  return articleFound.length > 0;
 };
 
 // create record in mongoDB
@@ -32,7 +32,16 @@ const create = async (listArticles) => {
 // list records in mongoDB
 const list = async () => {
   const articlesList = await Article.find();
-  return articlesList;
+  // return list sorted 
+  return articlesList.sort((a,b) => {
+    if (a.created_at > b.created_at) {
+      return -1;
+    }
+    if (a.created_at < b.created_at) {
+      return 1;
+    }
+    return 0;
+  });
 }
 
 export default {

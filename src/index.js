@@ -50,3 +50,5 @@ server.listen(process.env.PORT, async (err) => {
       console.error(errDB);
     });
 });
+
+console.log(process.env.PORT);

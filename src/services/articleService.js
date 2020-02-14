@@ -1,11 +1,12 @@
 import { Article } from '../models';
 
+// find article in mongoDB
 const find = async (id) => {
     const articleFound = await Article.find({ objectID: id});
-    console.log(`el articulo encontrado es ${articleFound}`);
     return !articleFound ? true : false;
 };
 
+// create record in mongoDB
 const create = async( listArticles ) => {
     // convert hits in array.
     let hitsArray = Object.entries(listArticles.hits);
@@ -14,7 +15,7 @@ const create = async( listArticles ) => {
         //save only new articles.
         find(hit[1]['objectID'])
             .then( (articleFound) => {
-                //if Article not found, create article
+                //if Article not found, save article
                 if (!articleFound) {
                     const newArticle = new Article(hit[1]);
 
@@ -35,7 +36,14 @@ const create = async( listArticles ) => {
     });
 };
 
+// list records in mongoDB
+const list = async () => {
+    const articlesList = await Article.find();
+    return articlesList;
+}
+
 export default {
     find,
-    create
+    create,
+    list
 };

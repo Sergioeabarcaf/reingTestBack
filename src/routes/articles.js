@@ -1,8 +1,8 @@
 import express from 'express';
-import { articlesControllers } from '../controllers';
+import { articleController } from '../controllers';
 
 const router = express.Router();
 
-// router.get('/', articlesControllers.list);
+router.get('/', articleController.list);
 
 export default router;

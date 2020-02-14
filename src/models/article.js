@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 
 const ArticleSchemma = new mongoose.Schema(
   {
+    visible: Boolean,
     created_at: String,
     title: String,
     url: String,

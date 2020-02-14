@@ -2,7 +2,7 @@ import { Article } from '../models';
 
 // find article in mongoDB
 const find = async (id) => {
-  const articleFound = await Article.find({ objectID: id });
+  const articleFound = await Article.find({ objectID : id });
   return articleFound.length > 0;
 };
 
@@ -15,9 +15,10 @@ const create = async (listArticles) => {
     // save only new articles.
     find(hit[1].objectID)
       .then((articleFound) => {
-        // if Article not found, save article
+        // if Article not found, save article.
         if (!articleFound) {
-          const newArticle = new Article(hit[1]);
+          // Add key 'visible'.
+          const newArticle = new Article(hit[1]).set('visible', true);
           return newArticle.save()
             .then((resp) => true)
             .catch((err) => false);
@@ -44,8 +45,15 @@ const list = async () => {
   });
 }
 
+// change visible key to false and return list of articles sorted .
+const del = async (param) => {
+  await Article.findOneAndUpdate({ objectID : param.id }, {'visible' : false});
+  return (await list()).filter((article) => article.visible);
+}
+
 export default {
   find,
   create,
   list,
+  del,
 };

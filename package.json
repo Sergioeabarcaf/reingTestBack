@@ -5,7 +5,9 @@
   "main": "server.js",
   "scripts": {
     "start": "npx src/server.js",
-    "dev": "export NODE_ENV=development && npx nodemon --exec babel-node src/index.js"
+    "dev": "export NODE_ENV=development && npx nodemon --exec babel-node src/index.js",
+    "lint": "npx eslint ./src",
+    "build": "npx babel ./src --out-dir dist"
   },
   "repository": {
     "type": "git",

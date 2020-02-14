@@ -21,27 +21,27 @@ const ArticleSchemma = new mongoose.Schema(
       title: {
         value: String,
         matchLevel: String,
-        matchedWords: Array
+        matchedWords: Array,
       },
       url: {
         value: String,
         matchLevel: String,
         fullyHighlighted: Boolean,
-        matchedWords: Array
+        matchedWords: Array,
       },
-      author: {           
-        value: String, 
-        matchLevel: String, 
-        matchedWords: Array
+      author: {
+        value: String,
+        matchLevel: String,
+        matchedWords: Array,
       },
       comment_text: {
         value: String,
         matchLevel: String,
         fullyHighlighted: Boolean,
-        matchedWords: Array
-      }
-    }
-  }
+        matchedWords: Array,
+      },
+    },
+  },
 );
 
 export default mongoose.model('Article', ArticleSchemma);

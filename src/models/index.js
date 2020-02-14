@@ -4,5 +4,5 @@ import Article from './article';
 mongoose.set('debug', true);
 
 export {
-    Article
+  Article,
 };

@@ -7,7 +7,7 @@ import routes from './routes';
 const server = express();
 
 server.use(bodyParser.json());
-server.use(bodyParser.urlencoded({extended: true}));
+server.use(bodyParser.urlencoded({ extended: true }));
 server.use(helmet());
 server.use('/', routes);
 

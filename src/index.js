@@ -2,6 +2,8 @@
 import axios from 'axios';
 import mongoose from 'mongoose';
 import server from './server';
+import '@babel/polyfill';
+import regeneratorRuntime from 'regenerator-runtime';
 import articleService from './services/articleService';
 
 require('dotenv').config({

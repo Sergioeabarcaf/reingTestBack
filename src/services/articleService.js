@@ -2,33 +2,36 @@ import { Article } from '../models';
 
 const find = async (id) => {
     const articleFound = await Article.find({ objectID: id});
-    console.log(articleFound);
-    return articleFound ? true : false;
+    console.log(`el articulo encontrado es ${articleFound}`);
+    return !articleFound ? true : false;
 };
 
 const create = async( listArticles ) => {
-    console.log(listArticles['hits']);
-    console.log(typeof(listArticles['hits']));
-    // valid listArticles is Array Type.
-    if (typeof(listArticles) !== Array) {
-        return ({"type": "error", "msj": "Type not supported"});
-    }
+    // convert hits in array.
+    let hitsArray = Object.entries(listArticles.hits);
 
-    listArticles.forEach(article => {
-        // save only new articles.
-        if( !find(article['objectID']) ){
-            const newArticle = new Article(article);
+    hitsArray.forEach(hit => {
+        //save only new articles.
+        find(hit[1]['objectID'])
+            .then( (articleFound) => {
+                //if Article not found, create article
+                if (!articleFound) {
+                    const newArticle = new Article(hit[1]);
 
-            return newArticle.save()
-                .then( (resp) => {
-                    console.log(resp);
-                    return true;
-                })
-                .catch( (err) => {
-                    console.error(err);
-                    return false;
-                });
-        }
+                    return newArticle.save()
+                        .then( (resp) => {
+                            console.log(resp);
+                            return true;
+                        })
+                        .catch( (err) => {
+                            console.error(err);
+                            return false;
+                        });
+                }
+            })
+            .catch((err)=> {
+                console.log(err);
+            });
     });
 };
 

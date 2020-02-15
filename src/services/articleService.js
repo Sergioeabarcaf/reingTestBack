@@ -32,8 +32,7 @@ const create = async (listArticles) => {
 
 // list records in mongoDB
 const list = async () => {
-  const articlesList = await Article.find();
-  // return list sorted 
+  const articlesList = await Article.find({visible: true}, { _id:0, objectID: 1, created_at: 1, title: 1, story_title: 1, story_url: 1, url: 1, author: 1 });
   return articlesList.sort((a,b) => {
     if (a.created_at > b.created_at) {
       return -1;
@@ -47,8 +46,13 @@ const list = async () => {
 
 // change visible key to false and return list of articles sorted .
 const del = async (param) => {
-  await Article.findOneAndUpdate({ objectID : param.id }, {'visible' : false});
-  return (await list()).filter((article) => article.visible);
+  try {
+    await Article.findOneAndUpdate({ objectID : param.id }, {'visible' : false});
+    return {status: true, message: "Delete Success"};
+  }
+  catch (err){
+    return {status: false, message: `Delete error: ${err}`};
+  }
 }
 
 export default {
